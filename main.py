@@ -17,16 +17,6 @@ X = pd.read_csv("clean_X.csv")
 # Header of Specify Input Parameters
 st.sidebar.header('Quels sont vos critères?')
 
-def user_input_features_test():
-    Age = st.sidebar.text_input('ancienneté du bien', int(X.Age.mean()))
-    GrLivArea = st.sidebar.text_input('Surface au sol', int(X.GrLivArea.mean()))
-    LotFrontage = st.sidebar.text_input('Taille de la facade', int(X.LotFrontage.mean()))
-    LotArea = st.sidebar.text_input('Surface totale', int(X.LotArea.mean()))
-    GarageArea = st.sidebar.text_input('Taille du garage', int(X.GarageArea.mean()))
-    Fence = st.sidebar.select_slider('Présence de barrières', options=[False, True], value = False)
-    Pool = st.sidebar.select_slider('Piscine souhaitée?', options=[False, True], value = False)
-    return Age, GrLivArea, LotFrontage, LotArea, GarageArea, Fence, Pool
-
 def user_input_features():
     Age = st.sidebar.slider('Ancienneté du bien', int(X.Age.min()), int(X.Age.max()), int(X.Age.mean()))
     LotArea = st.sidebar.slider('Surface totale', int(X.LotArea.min()), int(X.LotArea.max()), int(X.LotArea.mean()))
