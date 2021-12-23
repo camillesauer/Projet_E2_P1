@@ -31,6 +31,8 @@ def user_input_features():
     GarageArea = st.sidebar.slider('Taille du garage', int(X.GarageArea.min()), int(X.GarageArea.max()), int(X.GarageArea.mean()))
     FullBath = st.sidebar.slider('Salle de bains entières hors sous-sol', int(X.FullBath.min()), int(X.FullBath.max()), int(X.FullBath.mean()))
     TotRmsAbvGrd = st.sidebar.slider('Nombre de pièces hors sous-sol et hors salles de bains', int(X.TotRmsAbvGrd.min()), int(X.TotRmsAbvGrd.max()), int(X.TotRmsAbvGrd.mean()))
+    TotalBsmtSF = st.sidebar.slider('Surface totale du sous-sol en pieds au carré', int(X.TotalBsmtSF.min()), int(X.TotalBsmtSF.max()), int(X.TotalBsmtSF.mean()))
+    FirstFloor = st.sidebar.slider('Surface du rez-de-chaussée en pieds au carré', int(X.TotRmsAbvGrd.min()), int(X.FirstFloor.max()), int(X.FirstFloor.mean()))
 
     data = {'Age': Age,
             'GrLivArea': GrLivArea,
@@ -38,7 +40,9 @@ def user_input_features():
             'FullBath': FullBath,
             'GarageArea': GarageArea,
             'GarageCars': GarageCars,
-            'TotRmsAbvGrd': TotRmsAbvGrd
+            'TotRmsAbvGrd': TotRmsAbvGrd,
+            'TotalBsmtSF': TotalBsmtSF,
+            'FirstFloor': FirstFloor
             }
     features = pd.DataFrame(data, index=[0])
     return features

@@ -12,13 +12,15 @@ def user_input_features_test():
     GarageArea = st.sidebar.slider('Taille du garage', int(X.GarageArea.mean()))
     FullBath = st.sidebar.slider('Salle de bains entières hors sous-sol', int(X.FullBath.mean()))
     TotRmsAbvGrd = st.sidebar.slider('Nombre de pièces hors sous-sol et hors salles de bains', int(X.TotRmsAbvGrd.mean()))
-    return Age, GrLivArea, OverallQual, FullBath, GarageArea, TotRmsAbvGrd, GarageCars
+    TotalBsmtSF = st.sidebar.slider('Surface totale du sous-sol en pieds au carré', int(X.TotalBsmtSF.mean()))
+    FirstFloor = st.sidebar.slider('Surface du rez-de-chaussée en pieds au carré', int(X.FirstFloor.mean()))
+    return Age, GrLivArea, OverallQual, FullBath, GarageArea, TotRmsAbvGrd, GarageCars, FirstFloor, TotalBsmtSF
 
 
 class MyTestCase(unittest.TestCase):
 
     def test_user_input_feature_test(self):#je vérifie la présence de mes données dans le csv
-        Age, GrLivArea, FullBath, OverallQual, GarageArea, GarageCars, TotRmsAbvGrd = user_input_features_test()
+        Age, GrLivArea, FullBath, OverallQual, GarageArea, GarageCars, TotRmsAbvGrd, FirstFloor, TotalBsmtSF = user_input_features_test()
         self.assert_(Age is not None)
         self.assert_(GrLivArea is not None)
         self.assert_(OverallQual is not None)
@@ -28,14 +30,16 @@ class MyTestCase(unittest.TestCase):
         self.assert_(TotRmsAbvGrd is not None)
 
     def test_import_pickle_model(self): #je vérifie la bonne importation de ma data et que ma prédiction est un float
-        Age, GrLivArea, OverallQual, FullBath, GarageArea, GarageCars, TotRmsAbvGrd = user_input_features_test()
+        Age, GrLivArea, OverallQual, FullBath, GarageArea, GarageCars, TotRmsAbvGrd, FirstFloor, TotalBsmtSF = user_input_features_test()
         data = {'Age': Age,
                 'GrLivArea': GrLivArea,
                 'OverallQual': OverallQual,
                 'FullBath': FullBath,
                 'GarageArea': GarageArea,
                 'GarageCars': GarageCars,
-                'TotRmsAbvGrd': TotRmsAbvGrd
+                'TotRmsAbvGrd': TotRmsAbvGrd,
+                'TotalBsmtSF': TotalBsmtSF,
+                'FirstFloor': FirstFloor
                 }
         df = pd.DataFrame(data, index=[0])
         loaded_model = pickle.load(open("finalized_model.sav", 'rb'))
