@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import pickle
 from functions import viz_model, viz_params
 
@@ -17,28 +16,34 @@ X = pd.read_csv("clean_X.csv")
 # Header of Specify Input Parameters
 st.sidebar.header('Quels sont vos critères?')
 
+@st.cache
+def counter():
+    result = []
+    for i in X.FullBath:
+        result.append(i)
+        print(result)
+
 def user_input_features():
     Age = st.sidebar.slider('Ancienneté du bien', int(X.Age.min()), int(X.Age.max()), int(X.Age.mean()))
-    LotArea = st.sidebar.slider('Surface totale', int(X.LotArea.min()), int(X.LotArea.max()), int(X.LotArea.mean()))
-    GrLivArea = st.sidebar.slider('Surface au sol', int(X.GrLivArea.min()), int(X.GrLivArea.max()), int(X.GrLivArea.mean()))
-    LotFrontage = st.sidebar.slider('Taille de la façade', int(X.LotFrontage.min()), int(X.LotFrontage.max()), int(X.LotFrontage.mean()))
+    OverallQual = st.sidebar.slider('Qualité du matériel et de la finition de la maison', int(X.OverallQual.min()), int(X.OverallQual.max()), int(X.OverallQual.mean()))
+    GrLivArea = st.sidebar.slider('Surface habitable au dessus du niveau du sol', int(X.GrLivArea.min()), int(X.GrLivArea.max()), int(X.GrLivArea.mean()))
+    GarageCars = st.sidebar.slider('Capacité du garage', int(X.GarageCars.min()), int(X.GarageCars.max()), int(X.GarageCars.mean()))
     GarageArea = st.sidebar.slider('Taille du garage', int(X.GarageArea.min()), int(X.GarageArea.max()), int(X.GarageArea.mean()))
-    Fence = st.sidebar.select_slider('Présence de barrières', options=[False, True])
-    Pool = st.sidebar.select_slider('Piscine souhaitée?', options=[False, True])
+    FullBath = st.sidebar.slider('Salle de bains entières hors sous-sol', int(X.FullBath.min()), int(X.FullBath.max()), int(X.FullBath.mean()))
+    TotRmsAbvGrd = st.sidebar.slider('Nombre de pièces hors sous-sol et hors salles de bains', int(X.TotRmsAbvGrd.min()), int(X.TotRmsAbvGrd.max()), int(X.TotRmsAbvGrd.mean()))
 
     data = {'Age': Age,
             'GrLivArea': GrLivArea,
-            'LotFrontage': LotFrontage,
-            'LotArea': LotArea,
+            'OverallQual': OverallQual,
+            'FullBath': FullBath,
             'GarageArea': GarageArea,
-            'Fence': Fence,
-            'Pool' : Pool
+            'GarageCars': GarageCars,
+            'TotRmsAbvGrd': TotRmsAbvGrd
             }
     features = pd.DataFrame(data, index=[0])
     return features
 
 df = user_input_features()
-
 # Main Panel
 
 # Print specified input parameters
